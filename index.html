@@ -4,16 +4,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Negombo Tech – Computer Repair Negombo, Sri Lanka</title>
-  <meta name="description" content="Fast, reliable, and affordable computer repair services in Negombo, Sri Lanka. Laptop repair, virus removal, data recovery, hardware fixes and more." />
-  <meta name="keywords" content="computer repair negombo, laptop repair negombo, sri lanka computer repair, negombo tech" />
+  <meta name="description" content="Fast, reliable, and affordable computer repair services in Negombo, Sri Lanka." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* SHOP */
+    .shop { padding: 6rem 0; }
+    .shop-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 1.4rem; }
+    .shop-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .2s,border-color .2s,box-shadow .2s; }
+    .shop-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 40px rgba(0,200,255,.1); }
+    .shop-img { width:100%; height:150px; background: var(--bg-alt); display:flex; align-items:center; justify-content:center; font-size:3.5rem; }
+    .shop-body { padding: 1.2rem; }
+    .shop-category { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
+    .shop-name { font-family:var(--font-head); font-weight:700; font-size:1rem; margin-bottom:.4rem; }
+    .shop-desc { color:var(--muted); font-size:.84rem; margin-bottom:.9rem; }
+    .shop-price { font-family:var(--font-head); font-weight:800; font-size:1.2rem; color:var(--accent); }
+    .shop-badge { display:inline-block; font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:100px; margin-left:.5rem; }
+    .badge-instock { background:rgba(0,200,100,.15); color:#00c864; }
+    .badge-limited { background:rgba(255,180,0,.15); color:#ffb400; }
+    .badge-out { background:rgba(255,80,80,.15); color:#ff5050; }
+    .shop-empty,.jobs-empty { text-align:center; padding:3rem; color:var(--muted); grid-column:1/-1; }
+
+    /* JOBS */
+    .jobs { padding: 6rem 0; background: var(--bg-alt); }
+    .job-search-row { display:flex; gap:1rem; margin-bottom:2rem; }
+    .job-search-row input { flex:1; background:var(--bg-card); border:1.5px solid var(--border); border-radius:10px; padding:.75rem 1rem; color:var(--text); font-family:var(--font-body); font-size:.95rem; outline:none; transition:border-color .2s; }
+    .job-search-row input:focus { border-color:var(--accent); }
+    .job-search-row input::placeholder { color:var(--muted); }
+    .jobs-list { display:flex; flex-direction:column; gap:1rem; }
+    .job-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.6rem; display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:start; }
+    .job-id { font-size:.75rem; color:var(--accent); font-weight:700; letter-spacing:.08em; margin-bottom:.2rem; }
+    .job-name { font-family:var(--font-head); font-weight:700; font-size:1rem; margin-bottom:.2rem; }
+    .job-device { color:var(--muted); font-size:.85rem; }
+    .job-note { font-size:.8rem; color:var(--muted); margin-top:.4rem; font-style:italic; }
+    .job-stages { display:flex; align-items:center; margin-top:1.2rem; grid-column:1/-1; }
+    .stage-step { display:flex; flex-direction:column; align-items:center; flex:1; position:relative; }
+    .stage-step:not(:last-child)::after { content:''; position:absolute; top:13px; left:50%; width:100%; height:2px; background:var(--border); z-index:0; }
+    .stage-step.done:not(:last-child)::after { background:var(--accent); }
+    .stage-dot { width:26px; height:26px; border-radius:50%; background:var(--bg); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.65rem; z-index:1; position:relative; transition:all .3s; }
+    .stage-step.done .stage-dot { background:var(--accent); border-color:var(--accent); color:#000; font-weight:700; }
+    .stage-step.current .stage-dot { background:transparent; border-color:var(--accent); color:var(--accent); box-shadow:0 0 0 4px rgba(0,200,255,.2); animation:stagePulse 1.5s ease-in-out infinite; }
+    .stage-label { font-size:.62rem; color:var(--muted); margin-top:.4rem; text-align:center; max-width:60px; line-height:1.2; }
+    .stage-step.done .stage-label,.stage-step.current .stage-label { color:var(--accent); }
+    .job-pill { padding:.35rem .9rem; border-radius:100px; font-size:.78rem; font-weight:700; font-family:var(--font-head); white-space:nowrap; }
+    .pill-0 { background:rgba(100,150,255,.15); color:#6496ff; }
+    .pill-1 { background:rgba(255,180,0,.15); color:#ffb400; }
+    .pill-2 { background:rgba(255,120,0,.15); color:#ff7800; }
+    .pill-3 { background:rgba(180,0,255,.15); color:#c050ff; }
+    .pill-4 { background:rgba(0,200,100,.15); color:#00c864; }
+    .pill-5 { background:rgba(120,120,120,.15); color:#888; }
+
+    /* HOURS */
+    .hours-status { display:inline-flex; align-items:center; gap:.5rem; font-size:.82rem; font-weight:600; margin-top:.5rem; }
+    .hours-dot { width:8px; height:8px; border-radius:50%; }
+    .open-dot { background:#00c864; box-shadow:0 0 6px #00c864; }
+    .closed-dot { background:#ff5050; }
+    .hours-table { margin-top:.8rem; width:100%; }
+    .hours-table td { padding:.28rem 0; font-size:.86rem; }
+    .hours-table td:first-child { color:var(--muted); width:110px; }
+    .hours-table tr.today td { color:var(--accent); font-weight:600; }
+
+    @keyframes stagePulse { 0%,100%{box-shadow:0 0 0 4px rgba(0,200,255,.2)}50%{box-shadow:0 0 0 8px rgba(0,200,255,.05)} }
+    @media(max-width:600px){ .stage-label{display:none} .job-card{grid-template-columns:1fr} }
+  </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="#" class="logo">
@@ -25,14 +83,14 @@
       </button>
       <ul class="nav-links" id="navLinks">
         <li><a href="#services">Services</a></li>
-        <li><a href="#why">Why Us</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#jobs">Track Repair</a></li>
+        <li><a href="#why">About</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- HERO -->
   <header class="hero">
     <div class="hero-bg">
       <div class="circuit-grid"></div>
@@ -42,10 +100,10 @@
     <div class="hero-content">
       <div class="badge">⭐ 5.0 Rating · Negombo's Trusted Repair Shop</div>
       <h1>Your Computer Fixed.<br/><em>Fast &amp; Affordable.</em></h1>
-      <p class="hero-sub">Expert laptop, desktop &amp; hardware repairs in Negombo, Sri Lanka.<br/>Most repairs completed same day.</p>
+      <p class="hero-sub">Expert laptop, desktop &amp; hardware repairs in Negombo, Sri Lanka. Most repairs completed same day.</p>
       <div class="hero-actions">
         <a href="tel:+94713921131" class="btn btn-primary">📞 Call Now</a>
-        <a href="#services" class="btn btn-ghost">Our Services ↓</a>
+        <a href="#jobs" class="btn btn-ghost">Track My Repair ↓</a>
       </div>
       <div class="hero-stats">
         <div class="stat"><strong>5★</strong><span>Google Rating</span></div>
@@ -70,48 +128,40 @@
       <h2 class="section-title">Our Repair Services</h2>
       <p class="section-sub">Fast diagnostics, quality parts, honest pricing — every time.</p>
       <div class="services-grid">
-
-        <div class="service-card">
-          <div class="service-icon">💻</div>
-          <h3>Laptop Repair</h3>
-          <p>Screen replacements, keyboard fixes, charging port repair, overheating, and motherboard issues — all brands welcome.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🖥️</div>
-          <h3>Desktop Repair</h3>
-          <p>Hardware diagnostics, RAM upgrades, power supply replacement, and full system servicing for home and office PCs.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🦠</div>
-          <h3>Virus &amp; Malware Removal</h3>
-          <p>Complete virus cleanup, malware removal, and security hardening to keep your system safe and running smoothly.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">💾</div>
-          <h3>Data Recovery</h3>
-          <p>Recover lost files from crashed hard drives, corrupted SSDs, and accidentally deleted documents.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">⚡</div>
-          <h3>Software Fixes</h3>
-          <p>Windows/OS reinstallation, driver updates, slow PC optimization, and software troubleshooting.</p>
-        </div>
-
-        <div class="service-card">
-          <div class="service-icon">🔧</div>
-          <h3>Hardware Upgrades</h3>
-          <p>RAM upgrades, SSD installation, graphics card fitting, and component replacement for peak performance.</p>
-        </div>
-
+        <div class="service-card"><div class="service-icon">💻</div><h3>Laptop Repair</h3><p>Screen replacements, keyboard fixes, charging port repair, overheating, and motherboard issues — all brands welcome.</p></div>
+        <div class="service-card"><div class="service-icon">🖥️</div><h3>Desktop Repair</h3><p>Hardware diagnostics, RAM upgrades, power supply replacement, and full system servicing for home and office PCs.</p></div>
+        <div class="service-card"><div class="service-icon">🦠</div><h3>Virus &amp; Malware Removal</h3><p>Complete virus cleanup, malware removal, and security hardening.</p></div>
+        <div class="service-card"><div class="service-icon">💾</div><h3>Data Recovery</h3><p>Recover lost files from crashed hard drives, corrupted SSDs, and accidentally deleted documents.</p></div>
+        <div class="service-card"><div class="service-icon">⚡</div><h3>Software Fixes</h3><p>Windows/OS reinstallation, driver updates, slow PC optimization, and software troubleshooting.</p></div>
+        <div class="service-card"><div class="service-icon">🔧</div><h3>Hardware Upgrades</h3><p>RAM upgrades, SSD installation, graphics card fitting, and component replacement.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- WHY US -->
+  <!-- SHOP -->
+  <section class="shop" id="shop">
+    <div class="container">
+      <div class="section-label">Tech Store</div>
+      <h2 class="section-title">Items For Sale</h2>
+      <p class="section-sub">Quality laptops, components &amp; accessories. Call us to check availability and pricing.</p>
+      <div class="shop-grid" id="shopGrid"><div class="shop-empty">Loading products…</div></div>
+    </div>
+  </section>
+
+  <!-- JOB TRACKER -->
+  <section class="jobs" id="jobs">
+    <div class="container">
+      <div class="section-label">Live Repair Tracker</div>
+      <h2 class="section-title">Track Your Repair</h2>
+      <p class="section-sub">See the real-time status of your device. Search by your name, job ID, or device type.</p>
+      <div class="job-search-row">
+        <input type="text" id="jobSearch" placeholder="Search by name, job ID or device…" />
+      </div>
+      <div class="jobs-list" id="jobsList"><div class="jobs-empty">Loading…</div></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
   <section class="why" id="why">
     <div class="container">
       <div class="why-inner">
@@ -119,55 +169,24 @@
           <div class="section-label">Why Choose Us</div>
           <h2 class="section-title">Negombo's Trusted<br/>Tech Experts</h2>
           <ul class="why-list">
-            <li>
-              <span class="check">✓</span>
-              <div>
-                <strong>Same-Day Repairs</strong>
-                <p>Most issues diagnosed and fixed on the same visit so you're not left waiting.</p>
-              </div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div>
-                <strong>Honest, Upfront Pricing</strong>
-                <p>No hidden charges. We tell you the cost before we start any work.</p>
-              </div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div>
-                <strong>All Brands Welcome</strong>
-                <p>HP, Dell, Lenovo, Asus, Acer, Apple, Toshiba — we service them all.</p>
-              </div>
-            </li>
-            <li>
-              <span class="check">✓</span>
-              <div>
-                <strong>5-Star Rated</strong>
-                <p>Loved by 21+ customers on Google. Our reputation speaks for itself.</p>
-              </div>
-            </li>
+            <li><span class="check">✓</span><div><strong>Same-Day Repairs</strong><p>Most issues diagnosed and fixed on the same visit so you're not left waiting.</p></div></li>
+            <li><span class="check">✓</span><div><strong>Honest, Upfront Pricing</strong><p>No hidden charges. We tell you the cost before we start any work.</p></div></li>
+            <li><span class="check">✓</span><div><strong>All Brands Welcome</strong><p>HP, Dell, Lenovo, Asus, Acer, Apple, Toshiba — we service them all.</p></div></li>
+            <li><span class="check">✓</span><div><strong>5-Star Rated</strong><p>Loved by 21+ customers on Google. Our reputation speaks for itself.</p></div></li>
           </ul>
         </div>
         <div class="why-card">
           <div class="contact-quick">
             <h3>Get In Touch</h3>
-            <a href="tel:+94713921131" class="contact-row">
-              <span class="contact-ico">📞</span>
-              <span>+94 71 392 1131</span>
-            </a>
-            <a href="mailto:tecnegrepair@gmail.com" class="contact-row">
-              <span class="contact-ico">✉️</span>
-              <span>tecnegrepair@gmail.com</span>
-            </a>
-            <div class="contact-row">
-              <span class="contact-ico">📍</span>
-              <span>178, Meerigama Road,<br/>Negombo 11500, Sri Lanka</span>
+            <a href="tel:+94713921131" class="contact-row"><span class="contact-ico">📞</span><span>+94 71 392 1131</span></a>
+            <a href="mailto:tecnegrepair@gmail.com" class="contact-row"><span class="contact-ico">✉️</span><span>tecnegrepair@gmail.com</span></a>
+            <div class="contact-row"><span class="contact-ico">📍</span><span>178, Meerigama Road, Negombo 11500</span></div>
+            <a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener" class="contact-row"><span class="contact-ico">📸</span><span>@negombo_tech</span></a>
+            <div class="contact-row" style="flex-direction:column;align-items:flex-start;gap:.4rem;">
+              <div style="display:flex;align-items:center;gap:.5rem;"><span class="contact-ico">🕐</span><span style="font-weight:600">Opening Hours</span></div>
+              <div id="hoursStatus" class="hours-status"><span class="hours-dot closed-dot"></span>Loading…</div>
+              <table class="hours-table" id="hoursTable"></table>
             </div>
-            <a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener" class="contact-row">
-              <span class="contact-ico">📸</span>
-              <span>@negombo_tech</span>
-            </a>
             <a href="tel:+94713921131" class="btn btn-primary" style="width:100%;margin-top:1.2rem;text-align:center;">Call Now →</a>
           </div>
         </div>
@@ -182,83 +201,138 @@
       <h2 class="section-title">What People Say</h2>
       <div class="stars-big">★★★★★ <span>5.0 / 5 on Google</span></div>
       <div class="reviews-grid">
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"Fixed my laptop screen within a few hours. Very professional service and fair price. Highly recommended!"</p>
-          <div class="reviewer">— Local Customer</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"My PC had a serious virus issue. They cleaned it completely and it's running like new. Fast and friendly!"</p>
-          <div class="reviewer">— Negombo Resident</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p>"Great service at a very reasonable price. Recovered all my important files from a damaged hard drive. Lifesavers!"</p>
-          <div class="reviewer">— Small Business Owner</div>
-        </div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p>"Fixed my laptop screen within a few hours. Very professional service and fair price. Highly recommended!"</p><div class="reviewer">— Local Customer</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p>"My PC had a serious virus issue. They cleaned it completely and it's running like new. Fast and friendly!"</p><div class="reviewer">— Negombo Resident</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><p>"Great service at a very reasonable price. Recovered all my important files from a damaged hard drive. Lifesavers!"</p><div class="reviewer">— Small Business Owner</div></div>
       </div>
     </div>
   </section>
 
-  <!-- MAP / CONTACT -->
+  <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="container">
       <div class="section-label">Find Us</div>
       <h2 class="section-title">Visit Our Shop</h2>
       <div class="contact-grid">
         <div class="contact-info">
-          <div class="info-block">
-            <h4>Address</h4>
-            <p>178, Meerigama Road<br/>Negombo 11500, Sri Lanka</p>
-          </div>
-          <div class="info-block">
-            <h4>Phone</h4>
-            <p><a href="tel:+94713921131">+94 71 392 1131</a></p>
-          </div>
-          <div class="info-block">
-            <h4>Email</h4>
-            <p><a href="mailto:tecnegrepair@gmail.com">tecnegrepair@gmail.com</a></p>
-          </div>
-          <div class="info-block">
-            <h4>Hours</h4>
-            <p>Mon – Sat: 9:00 AM – 6:00 PM<br/>Sunday: Closed</p>
-          </div>
-          <div class="info-block">
-            <h4>Social</h4>
-            <p><a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener">Instagram: @negombo_tech</a></p>
-          </div>
+          <div class="info-block"><h4>Address</h4><p>178, Meerigama Road<br/>Negombo 11500, Sri Lanka</p></div>
+          <div class="info-block"><h4>Phone</h4><p><a href="tel:+94713921131">+94 71 392 1131</a></p></div>
+          <div class="info-block"><h4>Email</h4><p><a href="mailto:tecnegrepair@gmail.com">tecnegrepair@gmail.com</a></p></div>
+          <div class="info-block"><h4>Social</h4><p><a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener">@negombo_tech</a></p></div>
         </div>
         <div class="map-wrap">
-          <iframe
-            title="Negombo Tech Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1906.9301154513203!2d79.85925590900779!3d7.221617942762109!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2ef692adfa263%3A0x3173b14bd3457c2c!2sNegombo%20Tech%20Computer%20Repair!5e1!3m2!1sen!2slk!4v1778739285472!5m2!1sen!2slk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+          <iframe title="Negombo Tech Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4!2d79.8453!3d7.2080!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMjguOCJOIDc5wrA1MCc0My4xIkU!5e0!3m2!1sen!2slk!4v1620000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-brand">
-          <span class="logo-mark small">NT</span>
-          <span>Negombo<strong>Tech</strong></span>
-        </div>
+        <div class="footer-brand"><span class="logo-mark small">NT</span><span>Negombo<strong>Tech</strong></span></div>
         <p>Fast, reliable computer repair in Negombo, Sri Lanka.</p>
+        <p style="margin-top:.6rem"><a href="admin.html" style="color:var(--muted);font-size:.78rem;opacity:.45">⚙ Admin Panel</a></p>
         <p class="footer-copy">© 2025 Negombo Tech Computer Repair · All rights reserved</p>
       </div>
     </div>
   </footer>
 
   <script src="script.js"></script>
+  <script src="store.js"></script>
+  <script>
+    const STAGES = ['Received','Diagnosing','Repairing','Testing','Ready','Delivered'];
+
+    // HOURS
+    const DAY_KEYS = ['mon','tue','wed','thu','fri','sat','sun'];
+    const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+    function renderHours() {
+      const store = NTStore.get();
+      const now = new Date();
+      const todayIdx = (now.getDay() + 6) % 7;
+      const todayKey = DAY_KEYS[todayIdx];
+      const h = store.hours[todayKey];
+      let isOpen = false;
+      if (!h.closed && h.open && h.close) {
+        const [oh,om] = h.open.split(':').map(Number);
+        const [ch,cm] = h.close.split(':').map(Number);
+        const n = now.getHours()*60+now.getMinutes();
+        isOpen = n >= oh*60+om && n < ch*60+cm;
+      }
+      document.getElementById('hoursStatus').innerHTML =
+        `<span class="hours-dot ${isOpen?'open-dot':'closed-dot'}"></span>
+         ${isOpen ? `Open now · Closes ${h.close}` : (h.closed ? 'Closed today' : `Closed · Opens ${h.open}`)}`;
+      document.getElementById('hoursTable').innerHTML = DAY_KEYS.map((k,i) => {
+        const hh = store.hours[k];
+        return `<tr class="${i===todayIdx?'today':''}"><td>${DAY_NAMES[i]}</td><td>${hh.closed?'Closed':`${hh.open} – ${hh.close}`}</td></tr>`;
+      }).join('');
+    }
+
+    // SHOP
+    const STOCK_LABEL = {instock:'In Stock',limited:'Limited',out:'Out of Stock'};
+    const STOCK_CLASS  = {instock:'badge-instock',limited:'badge-limited',out:'badge-out'};
+
+    function renderShop() {
+      const store = NTStore.get();
+      const grid = document.getElementById('shopGrid');
+      if (!store.products.length) {
+        grid.innerHTML = '<div class="shop-empty">No products listed yet. Check back soon!</div>'; return;
+      }
+      grid.innerHTML = store.products.map(p => `
+        <div class="shop-card">
+          <div class="shop-img">${p.emoji||'📦'}</div>
+          <div class="shop-body">
+            <div class="shop-category">${p.category}</div>
+            <div class="shop-name">${p.name}</div>
+            <div class="shop-desc">${p.desc}</div>
+            <div class="shop-price">${p.price}
+              <span class="shop-badge ${STOCK_CLASS[p.stock]}">${STOCK_LABEL[p.stock]}</span>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+
+    // JOBS
+    function renderJobs(filter='') {
+      const store = NTStore.get();
+      let jobs = store.jobs || [];
+      if (filter) {
+        const q = filter.toLowerCase();
+        jobs = jobs.filter(j =>
+          j.id.toLowerCase().includes(q)||j.name.toLowerCase().includes(q)||j.device.toLowerCase().includes(q));
+      } else {
+        jobs = jobs.filter(j => j.stage < 6);
+      }
+      const list = document.getElementById('jobsList');
+      if (!jobs.length) {
+        list.innerHTML = `<div class="jobs-empty">${filter?'No results for "'+filter+'"':'No active repairs right now.'}</div>`; return;
+      }
+      list.innerHTML = jobs.map(job => {
+        const si = Math.min(job.stage, STAGES.length-1);
+        const stagesHtml = STAGES.map((s,i) => {
+          const cls = i < si ? 'done' : i === si ? 'current' : '';
+          return `<div class="stage-step ${cls}">
+            <div class="stage-dot">${i<si?'✓':i===si?'●':''}</div>
+            <div class="stage-label">${s}</div>
+          </div>`;
+        }).join('');
+        return `<div class="job-card">
+          <div>
+            <div class="job-id">${job.id}</div>
+            <div class="job-name">${job.name}</div>
+            <div class="job-device">${job.device}</div>
+            ${job.note?`<div class="job-note">📝 ${job.note}</div>`:''}
+          </div>
+          <span class="job-pill pill-${si}">${STAGES[si]}</span>
+          <div class="job-stages">${stagesHtml}</div>
+        </div>`;
+      }).join('');
+    }
+
+    document.getElementById('jobSearch').addEventListener('input', e => renderJobs(e.target.value));
+    renderHours(); renderShop(); renderJobs();
+    setInterval(() => { renderHours(); renderShop(); renderJobs(document.getElementById('jobSearch').value); }, 20000);
+  </script>
 </body>
 </html>
