@@ -529,11 +529,22 @@ img { max-width: 100%; display: block; }
 .info-block a { color: var(--text); transition: color 0.2s; }
 .info-block a:hover { color: var(--accent); }
 
-.map-wrap {
-  height: 380px;
-  border-radius: var(--radius);
+.map-container {
+  width: 100%;
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--border);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 350px;
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .map-container iframe {
+    height: 250px;
+  }
 }
 
 /* ── FOOTER ── */
