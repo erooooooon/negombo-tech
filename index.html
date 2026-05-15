@@ -4,335 +4,860 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Negombo Tech – Computer Repair Negombo, Sri Lanka</title>
-  <meta name="description" content="Fast, reliable, and affordable computer repair services in Negombo, Sri Lanka." />
+  <meta name="description" content="Fast, reliable, and affordable computer repair services in Negombo, Sri Lanka. Laptop repair, virus removal, data recovery, hardware fixes and more." />
+  <meta name="keywords" content="computer repair negombo, laptop repair negombo, sri lanka computer repair, negombo tech" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
   <style>
-    /* SHOP */
-    .shop { padding: 6rem 0; }
-    .shop-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 1.4rem; }
-    .shop-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .2s,border-color .2s,box-shadow .2s; }
-    .shop-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 40px rgba(0,200,255,.1); }
-    .shop-img { width:100%; height:150px; background: var(--bg-alt); display:flex; align-items:center; justify-content:center; font-size:3.5rem; }
-    .shop-body { padding: 1.2rem; }
-    .shop-category { font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:.3rem; }
-    .shop-name { font-family:var(--font-head); font-weight:700; font-size:1rem; margin-bottom:.4rem; }
-    .shop-desc { color:var(--muted); font-size:.84rem; margin-bottom:.9rem; }
-    .shop-price { font-family:var(--font-head); font-weight:800; font-size:1.2rem; color:var(--accent); }
-    .shop-badge { display:inline-block; font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:100px; margin-left:.5rem; }
-    .badge-instock { background:rgba(0,200,100,.15); color:#00c864; }
-    .badge-limited { background:rgba(255,180,0,.15); color:#ffb400; }
-    .badge-out { background:rgba(255,80,80,.15); color:#ff5050; }
-    .shop-empty,.jobs-empty { text-align:center; padding:3rem; color:var(--muted); grid-column:1/-1; }
+:root {
+  --bg:        #0a0e14;
+  --bg-card:   #111820;
+  --bg-alt:    #0d1219;
+  --border:    #1e2d3d;
+  --accent:    #00c8ff;
+  --text:      #e8eef5;
+  --muted:     #7a9ab5;
+  --radius:    12px;
+  --nav-h:     70px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 1rem; line-height: 1.65; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.section-label { font-family: var(--font-head); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+.section-title { font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.15; margin-bottom: 0.9rem; }
+.section-sub { color: var(--muted); max-width: 520px; margin-bottom: 3rem; }
 
-    /* JOBS */
-    .jobs { padding: 6rem 0; background: var(--bg-alt); }
-    .job-search-row { display:flex; gap:1rem; margin-bottom:2rem; }
-    .job-search-row input { flex:1; background:var(--bg-card); border:1.5px solid var(--border); border-radius:10px; padding:.75rem 1rem; color:var(--text); font-family:var(--font-body); font-size:.95rem; outline:none; transition:border-color .2s; }
-    .job-search-row input:focus { border-color:var(--accent); }
-    .job-search-row input::placeholder { color:var(--muted); }
-    .jobs-list { display:flex; flex-direction:column; gap:1rem; }
-    .job-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.6rem; display:grid; grid-template-columns:1fr auto; gap:1rem; align-items:start; }
-    .job-id { font-size:.75rem; color:var(--accent); font-weight:700; letter-spacing:.08em; margin-bottom:.2rem; }
-    .job-name { font-family:var(--font-head); font-weight:700; font-size:1rem; margin-bottom:.2rem; }
-    .job-device { color:var(--muted); font-size:.85rem; }
-    .job-note { font-size:.8rem; color:var(--muted); margin-top:.4rem; font-style:italic; }
-    .job-stages { display:flex; align-items:center; margin-top:1.2rem; grid-column:1/-1; }
-    .stage-step { display:flex; flex-direction:column; align-items:center; flex:1; position:relative; }
-    .stage-step:not(:last-child)::after { content:''; position:absolute; top:13px; left:50%; width:100%; height:2px; background:var(--border); z-index:0; }
-    .stage-step.done:not(:last-child)::after { background:var(--accent); }
-    .stage-dot { width:26px; height:26px; border-radius:50%; background:var(--bg); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.65rem; z-index:1; position:relative; transition:all .3s; }
-    .stage-step.done .stage-dot { background:var(--accent); border-color:var(--accent); color:#000; font-weight:700; }
-    .stage-step.current .stage-dot { background:transparent; border-color:var(--accent); color:var(--accent); box-shadow:0 0 0 4px rgba(0,200,255,.2); animation:stagePulse 1.5s ease-in-out infinite; }
-    .stage-label { font-size:.62rem; color:var(--muted); margin-top:.4rem; text-align:center; max-width:60px; line-height:1.2; }
-    .stage-step.done .stage-label,.stage-step.current .stage-label { color:var(--accent); }
-    .job-pill { padding:.35rem .9rem; border-radius:100px; font-size:.78rem; font-weight:700; font-family:var(--font-head); white-space:nowrap; }
-    .pill-0 { background:rgba(100,150,255,.15); color:#6496ff; }
-    .pill-1 { background:rgba(255,180,0,.15); color:#ffb400; }
-    .pill-2 { background:rgba(255,120,0,.15); color:#ff7800; }
-    .pill-3 { background:rgba(180,0,255,.15); color:#c050ff; }
-    .pill-4 { background:rgba(0,200,100,.15); color:#00c864; }
-    .pill-5 { background:rgba(120,120,120,.15); color:#888; }
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); background: rgba(10,14,20,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: background 0.3s; }
+.nav.scrolled { background: rgba(10,14,20,0.98); }
+.nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; }
+.logo-mark { background: var(--accent); color: #000; font-size: 0.78rem; font-weight: 800; padding: 4px 8px; border-radius: 6px; letter-spacing: 0.05em; }
+.logo-mark.small { font-size: 0.72rem; padding: 3px 7px; }
+.logo-text strong { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--accent) !important; color: #000 !important; padding: 0.5rem 1.1rem; border-radius: 8px; font-weight: 700 !important; font-family: var(--font-head); }
+.nav-cta:hover { opacity: 0.85; }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
 
-    /* HOURS */
-    .hours-status { display:inline-flex; align-items:center; gap:.5rem; font-size:.82rem; font-weight:600; margin-top:.5rem; }
-    .hours-dot { width:8px; height:8px; border-radius:50%; }
-    .open-dot { background:#00c864; box-shadow:0 0 6px #00c864; }
-    .closed-dot { background:#ff5050; }
-    .hours-table { margin-top:.8rem; width:100%; }
-    .hours-table td { padding:.28rem 0; font-size:.86rem; }
-    .hours-table td:first-child { color:var(--muted); width:110px; }
-    .hours-table tr.today td { color:var(--accent); font-weight:600; }
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; padding: 0.75rem 1.6rem; border-radius: 10px; transition: all 0.2s; cursor: pointer; border: none; }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { background: #33d4ff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,255,0.3); }
+.btn-ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 0.5rem 1rem; font-size: 0.82rem; }
+.btn-danger { background: #ff4455; color: #fff; }
+.btn-danger:hover { background: #ff6677; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-    @keyframes stagePulse { 0%,100%{box-shadow:0 0 0 4px rgba(0,200,255,.2)}50%{box-shadow:0 0 0 8px rgba(0,200,255,.05)} }
-    @media(max-width:600px){ .stage-label{display:none} .job-card{grid-template-columns:1fr} }
+/* HOURS BANNER */
+.hours-banner { background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 0.55rem 0; text-align: center; font-size: 0.85rem; color: var(--muted); }
+.hours-banner strong { color: var(--accent); }
+.closed-notice { color: #ff9966; font-weight: 600; }
+
+/* HERO */
+.hero { min-height: 100vh; padding-top: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: 3rem; max-width: 1120px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; overflow: hidden; }
+.hero-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.circuit-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px); background-size: 40px 40px; }
+.glow { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.18; }
+.glow-1 { width: 500px; height: 500px; top: -100px; left: -100px; background: var(--accent); }
+.glow-2 { width: 400px; height: 400px; bottom: -80px; right: -80px; background: #0060ff; }
+.hero-content { flex: 1; max-width: 620px; }
+.badge { display: inline-block; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.25); color: var(--accent); font-size: 0.8rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; animation: fadeUp 0.6s ease both; }
+.hero h1 { font-family: var(--font-head); font-size: clamp(2.5rem, 5.5vw, 4rem); font-weight: 800; line-height: 1.08; margin-bottom: 1.2rem; animation: fadeUp 0.6s 0.1s ease both; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-sub { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; animation: fadeUp 0.6s 0.2s ease both; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.3s ease both; }
+.hero-stats { display: flex; align-items: center; gap: 1.5rem; animation: fadeUp 0.6s 0.4s ease both; }
+.stat strong { display: block; font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+.stat span { font-size: 0.8rem; color: var(--muted); }
+.stat-divider { width: 1px; height: 36px; background: var(--border); }
+.hero-visual { flex-shrink: 0; animation: fadeUp 0.6s 0.2s ease both; }
+.device-card { width: 200px; height: 200px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.device-icon { font-size: 5rem; }
+.device-pulse { position: absolute; inset: -20px; border: 1.5px solid var(--accent); border-radius: 36px; opacity: 0.2; animation: pulse 2.5s ease-in-out infinite; }
+
+/* SERVICES */
+.services { padding: 6rem 0; background: var(--bg-alt); }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+.service-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.service-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,200,255,0.1); }
+.service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+.service-card h3 { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+.service-card p { color: var(--muted); font-size: 0.92rem; }
+
+/* FOR SALE */
+.forsale { padding: 6rem 0; background: var(--bg); }
+.forsale-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.item-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.item-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,200,255,0.1); }
+.item-img { width: 100%; height: 180px; background: #141e2a; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; overflow: hidden; }
+.item-img img { width: 100%; height: 100%; object-fit: cover; }
+.item-body { padding: 1.2rem 1.4rem; }
+.item-condition { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; margin-bottom: 0.6rem; }
+.condition-new         { background: rgba(0,200,100,0.12); color: #00cc66; border: 1px solid rgba(0,200,100,0.25); }
+.condition-used        { background: rgba(0,200,255,0.08); color: var(--accent); border: 1px solid rgba(0,200,255,0.2); }
+.condition-refurbished { background: rgba(255,180,0,0.1);  color: #ffcc44; border: 1px solid rgba(255,180,0,0.2); }
+.item-name  { font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+.item-desc  { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.8rem; }
+.item-price { font-family: var(--font-head); font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+.empty-state { text-align: center; padding: 3rem; color: var(--muted); grid-column: 1/-1; }
+.empty-state div { font-size: 3rem; margin-bottom: 0.8rem; }
+
+/* JOB TRACKER */
+.jobtracker { padding: 6rem 0; background: var(--bg-alt); }
+.tracker-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; max-width: 600px; margin: 0 auto 3rem; }
+.tracker-box h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+.tracker-input-row { display: flex; gap: 0.7rem; }
+.tracker-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.7rem 1rem; color: var(--text); font-family: var(--font-body); font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+.tracker-input:focus { border-color: var(--accent); }
+.job-result { margin-top: 1.5rem; padding: 1.5rem; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; display: none; }
+.job-result.visible { display: block; }
+.job-result-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+.job-id-label { font-family: var(--font-head); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+.job-device  { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; }
+.job-customer{ font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
+.stage-track { display: flex; flex-direction: column; }
+.stage-item  { display: flex; gap: 1rem; align-items: flex-start; }
+.stage-dot-col { display: flex; flex-direction: column; align-items: center; width: 24px; flex-shrink: 0; }
+.stage-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; border: 2px solid var(--border); background: var(--bg); color: var(--muted); flex-shrink: 0; }
+.stage-dot.done   { background: var(--accent); border-color: var(--accent); color: #000; }
+.stage-dot.active { background: #ffcc44; border-color: #ffcc44; color: #000; animation: stagePulse 1.5s ease-in-out infinite; }
+.stage-line { width: 2px; height: 22px; background: var(--border); margin: 2px 0; }
+.stage-line.done { background: var(--accent); opacity: 0.35; }
+.stage-content { padding-top: 2px; padding-bottom: 18px; }
+.stage-name        { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+.stage-name.done   { color: var(--text); }
+.stage-name.active { color: #ffcc44; }
+.stage-note { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+.job-not-found { color: #ff9966; font-size: 0.9rem; margin-top: 1rem; display: none; }
+.job-not-found.visible { display: block; }
+
+/* STAGE BADGES */
+.stage-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 9px; border-radius: 6px; white-space: nowrap; }
+.sb-received   { background: rgba(100,150,255,0.12); color: #88aaff; border: 1px solid rgba(100,150,255,0.25); }
+.sb-diagnosing { background: rgba(255,200,0,0.1);   color: #ffcc44; border: 1px solid rgba(255,200,0,0.25); }
+.sb-repairing  { background: rgba(255,150,0,0.1);   color: #ffaa44; border: 1px solid rgba(255,150,0,0.25); }
+.sb-testing    { background: rgba(200,100,255,0.1);  color: #cc88ff; border: 1px solid rgba(200,100,255,0.25); }
+.sb-ready      { background: rgba(0,200,100,0.1);   color: #00cc66; border: 1px solid rgba(0,200,100,0.25); }
+.sb-collected  { background: rgba(100,200,100,0.1); color: #88dd88; border: 1px solid rgba(100,200,100,0.25); }
+
+/* WHY */
+.why { padding: 6rem 0; }
+.why-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.why-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+.why-list li { display: flex; gap: 1rem; align-items: flex-start; }
+.check { width: 28px; height: 28px; min-width: 28px; background: rgba(0,200,255,0.12); border: 1.5px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--accent); margin-top: 2px; }
+.why-list li strong { display: block; font-family: var(--font-head); font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+.why-list li p { color: var(--muted); font-size: 0.9rem; }
+.contact-quick { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+.contact-quick h3 { font-family: var(--font-head); font-weight: 800; font-size: 1.3rem; margin-bottom: 1.4rem; color: var(--accent); }
+.contact-row { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.8rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--muted); transition: color 0.2s; }
+.contact-row:last-of-type { border-bottom: none; }
+.contact-row:hover { color: var(--text); }
+.contact-ico { font-size: 1.1rem; margin-top: 1px; }
+
+/* REVIEWS */
+.reviews { padding: 6rem 0; background: var(--bg-alt); }
+.stars-big { font-size: 1.5rem; color: #f5c518; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 0.6rem; }
+.stars-big span { font-family: var(--font-head); font-size: 0.95rem; color: var(--muted); font-weight: 600; }
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+.review-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+.review-stars { color: #f5c518; font-size: 1rem; margin-bottom: 0.8rem; }
+.review-card p { color: var(--muted); font-size: 0.92rem; font-style: italic; }
+.reviewer { margin-top: 1rem; font-size: 0.82rem; color: var(--accent); font-weight: 600; }
+
+/* CONTACT */
+.contact { padding: 6rem 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; }
+.contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+.info-block h4 { font-family: var(--font-head); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.3rem; }
+.info-block p { color: var(--muted); font-size: 0.92rem; }
+.info-block a { color: var(--text); transition: color 0.2s; }
+.info-block a:hover { color: var(--accent); }
+.map-wrap { height: 380px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 2.5rem 0; }
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; text-align: center; }
+.footer-brand { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-head); font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; }
+.footer-brand strong { color: var(--accent); }
+.footer p { color: var(--muted); font-size: 0.88rem; }
+.footer-copy { font-size: 0.78rem !important; margin-top: 0.3rem; }
+.footer-admin-link { font-size: 0.75rem; color: #1a2535; margin-top: 0.5rem; cursor: pointer; transition: color 0.3s; user-select: none; }
+.footer-admin-link:hover { color: var(--muted); }
+
+/* ADMIN OVERLAY */
+.admin-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1000; overflow-y: auto; padding: 2rem 1rem; }
+.admin-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+.admin-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 840px; padding: 2rem; position: relative; margin: auto; }
+.admin-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--muted); font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 4px 10px; }
+.admin-close:hover { color: var(--text); }
+.admin-title { font-family: var(--font-head); font-size: 1.3rem; font-weight: 800; color: var(--accent); margin-bottom: 0.3rem; }
+.admin-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
+.admin-section { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+.admin-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.admin-section-title { font-family: var(--font-head); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.2rem; }
+.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.admin-form-row.single { grid-template-columns: 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.form-group input, .form-group select, .form-group textarea { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text); font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 100%; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.form-group select option { background: var(--bg-card); }
+.admin-msg { display: none; padding: 0.7rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-top: 0.8rem; }
+.admin-msg.success { background: rgba(0,200,100,0.12); color: #00cc66; border: 1px solid rgba(0,200,100,0.25); display: block; }
+.admin-msg.error   { background: rgba(255,68,85,0.12);  color: #ff9999; border: 1px solid rgba(255,68,85,0.25);  display: block; }
+.login-form { max-width: 340px; margin: 2rem auto; }
+.admin-list { display: flex; flex-direction: column; gap: 0.75rem; max-height: 360px; overflow-y: auto; }
+.admin-job-item, .admin-item-row { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.admin-job-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.admin-job-id { font-family: var(--font-head); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.08em; }
+.admin-job-device { font-weight: 600; font-size: 0.9rem; }
+.admin-job-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.6rem; align-items: center; }
+.admin-item-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.admin-item-info .name  { font-weight: 600; font-size: 0.9rem; }
+.admin-item-info .price { font-size: 0.82rem; color: var(--accent); margin-top: 2px; }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(0,200,255,0.25); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 5px; }
+
+@keyframes fadeUp    { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse     { 0%, 100% { transform: scale(1); opacity: 0.15; } 50% { transform: scale(1.06); opacity: 0.3; } }
+@keyframes stagePulse{ 0%, 100% { box-shadow: 0 0 0 0 rgba(255,200,68,0.4); } 50% { box-shadow: 0 0 0 6px rgba(255,200,68,0); } }
+@keyframes spin      { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+  .hero { flex-direction: column; text-align: center; padding-top: calc(var(--nav-h) + 2rem); padding-bottom: 4rem; min-height: auto; }
+  .hero-actions, .hero-stats { justify-content: center; }
+  .hero-visual { display: none; }
+  .why-inner, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .map-wrap { height: 280px; }
+}
+@media (max-width: 680px) {
+  .nav-links { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); flex-direction: column; gap: 0; padding: 1rem 0; z-index: 99; }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .hamburger { display: flex; }
+  .services-grid, .reviews-grid, .forsale-grid { grid-template-columns: 1fr; }
+  .admin-form-row { grid-template-columns: 1fr; }
+  .tracker-input-row { flex-direction: column; }
+}
   </style>
 </head>
 <body>
 
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-mark">NT</span>
-        <span class="logo-text">Negombo<strong>Tech</strong></span>
-      </a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#shop">Shop</a></li>
-        <li><a href="#jobs">Track Repair</a></li>
-        <li><a href="#why">About</a></li>
-        <li><a href="#contact" class="nav-cta">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<div class="hours-banner" id="hoursBanner"><span id="hoursText">Loading hours…</span></div>
 
-  <header class="hero">
-    <div class="hero-bg">
-      <div class="circuit-grid"></div>
-      <div class="glow glow-1"></div>
-      <div class="glow glow-2"></div>
-    </div>
-    <div class="hero-content">
-      <div class="badge">⭐ 5.0 Rating · Negombo's Trusted Repair Shop</div>
-      <h1>Your Computer Fixed.<br/><em>Fast &amp; Affordable.</em></h1>
-      <p class="hero-sub">Expert laptop, desktop &amp; hardware repairs in Negombo, Sri Lanka. Most repairs completed same day.</p>
-      <div class="hero-actions">
-        <a href="tel:+94713921131" class="btn btn-primary">📞 Call Now</a>
-        <a href="#jobs" class="btn btn-ghost">Track My Repair ↓</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><strong>5★</strong><span>Google Rating</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><strong>21+</strong><span>Happy Reviews</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><strong>Fast</strong><span>Same-Day Fixes</span></div>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="device-card">
-        <div class="device-icon">💻</div>
-        <div class="device-pulse"></div>
-      </div>
-    </div>
-  </header>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo"><span class="logo-mark">NT</span><span class="logo-text">Negombo<strong>Tech</strong></span></a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#forsale">For Sale</a></li>
+      <li><a href="#jobs">Track Repair</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="section-label">What We Fix</div>
-      <h2 class="section-title">Our Repair Services</h2>
-      <p class="section-sub">Fast diagnostics, quality parts, honest pricing — every time.</p>
-      <div class="services-grid">
-        <div class="service-card"><div class="service-icon">💻</div><h3>Laptop Repair</h3><p>Screen replacements, keyboard fixes, charging port repair, overheating, and motherboard issues — all brands welcome.</p></div>
-        <div class="service-card"><div class="service-icon">🖥️</div><h3>Desktop Repair</h3><p>Hardware diagnostics, RAM upgrades, power supply replacement, and full system servicing for home and office PCs.</p></div>
-        <div class="service-card"><div class="service-icon">🦠</div><h3>Virus &amp; Malware Removal</h3><p>Complete virus cleanup, malware removal, and security hardening.</p></div>
-        <div class="service-card"><div class="service-icon">💾</div><h3>Data Recovery</h3><p>Recover lost files from crashed hard drives, corrupted SSDs, and accidentally deleted documents.</p></div>
-        <div class="service-card"><div class="service-icon">⚡</div><h3>Software Fixes</h3><p>Windows/OS reinstallation, driver updates, slow PC optimization, and software troubleshooting.</p></div>
-        <div class="service-card"><div class="service-icon">🔧</div><h3>Hardware Upgrades</h3><p>RAM upgrades, SSD installation, graphics card fitting, and component replacement.</p></div>
+<header class="hero">
+  <div class="hero-bg"><div class="circuit-grid"></div><div class="glow glow-1"></div><div class="glow glow-2"></div></div>
+  <div class="hero-content">
+    <div class="badge">⭐ 5.0 Rating · Negombo's Trusted Repair Shop</div>
+    <h1>Your Computer Fixed.<br/><em>Fast &amp; Affordable.</em></h1>
+    <p class="hero-sub">Expert laptop, desktop &amp; hardware repairs in Negombo, Sri Lanka.<br/>Most repairs completed same day.</p>
+    <div class="hero-actions">
+      <a href="tel:+94713921131" class="btn btn-primary">📞 Call Now</a>
+      <a href="#jobs" class="btn btn-ghost">Track My Repair →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>5★</strong><span>Google Rating</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><strong>21+</strong><span>Happy Reviews</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><strong>Fast</strong><span>Same-Day Fixes</span></div>
+    </div>
+  </div>
+  <div class="hero-visual"><div class="device-card"><div class="device-icon">💻</div><div class="device-pulse"></div></div></div>
+</header>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-label">What We Fix</div>
+    <h2 class="section-title">Our Repair Services</h2>
+    <p class="section-sub">Fast diagnostics, quality parts, honest pricing — every time.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">💻</div><h3>Laptop Repair</h3><p>Screen replacements, keyboard fixes, charging port repair, overheating, and motherboard issues — all brands welcome.</p></div>
+      <div class="service-card"><div class="service-icon">🖥️</div><h3>Desktop Repair</h3><p>Hardware diagnostics, RAM upgrades, power supply replacement, and full system servicing for home and office PCs.</p></div>
+      <div class="service-card"><div class="service-icon">🦠</div><h3>Virus &amp; Malware Removal</h3><p>Complete virus cleanup, malware removal, and security hardening to keep your system safe and running smoothly.</p></div>
+      <div class="service-card"><div class="service-icon">💾</div><h3>Data Recovery</h3><p>Recover lost files from crashed hard drives, corrupted SSDs, and accidentally deleted documents.</p></div>
+      <div class="service-card"><div class="service-icon">⚡</div><h3>Software Fixes</h3><p>Windows/OS reinstallation, driver updates, slow PC optimization, and software troubleshooting.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><h3>Hardware Upgrades</h3><p>RAM upgrades, SSD installation, graphics card fitting, and component replacement for peak performance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="forsale" id="forsale">
+  <div class="container">
+    <div class="section-label">Marketplace</div>
+    <h2 class="section-title">Items For Sale</h2>
+    <p class="section-sub">Quality refurbished and new tech items available at our shop. Call to enquire or visit us.</p>
+    <div class="forsale-grid" id="forsaleGrid">
+      <div class="empty-state"><div>🏷️</div><p>Loading items…</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="jobtracker" id="jobs">
+  <div class="container">
+    <div class="section-label">Job Status</div>
+    <h2 class="section-title">Track Your Repair</h2>
+    <p class="section-sub">Enter your Job ID (given when you dropped off your device) to check the live status of your repair.</p>
+    <div class="tracker-box">
+      <h3>Enter Your Job ID</h3>
+      <div class="tracker-input-row">
+        <input type="text" class="tracker-input" id="jobInput" placeholder="e.g. NT-2025-001" maxlength="30" />
+        <button class="btn btn-primary" id="trackBtn" onclick="lookupJob()">Track →</button>
       </div>
+      <div class="job-not-found" id="jobNotFound">❌ Job ID not found. Please check and try again, or call us.</div>
+      <div class="job-result" id="jobResult"></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SHOP -->
-  <section class="shop" id="shop">
-    <div class="container">
-      <div class="section-label">Tech Store</div>
-      <h2 class="section-title">Items For Sale</h2>
-      <p class="section-sub">Quality laptops, components &amp; accessories. Call us to check availability and pricing.</p>
-      <div class="shop-grid" id="shopGrid"><div class="shop-empty">Loading products…</div></div>
-    </div>
-  </section>
-
-  <!-- JOB TRACKER -->
-  <section class="jobs" id="jobs">
-    <div class="container">
-      <div class="section-label">Live Repair Tracker</div>
-      <h2 class="section-title">Track Your Repair</h2>
-      <p class="section-sub">See the real-time status of your device. Search by your name, job ID, or device type.</p>
-      <div class="job-search-row">
-        <input type="text" id="jobSearch" placeholder="Search by name, job ID or device…" />
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="why-text">
+        <div class="section-label">Why Choose Us</div>
+        <h2 class="section-title">Negombo's Trusted<br/>Tech Experts</h2>
+        <ul class="why-list">
+          <li><span class="check">✓</span><div><strong>Same-Day Repairs</strong><p>Most issues diagnosed and fixed on the same visit so you're not left waiting.</p></div></li>
+          <li><span class="check">✓</span><div><strong>Honest, Upfront Pricing</strong><p>No hidden charges. We tell you the cost before we start any work.</p></div></li>
+          <li><span class="check">✓</span><div><strong>All Brands Welcome</strong><p>HP, Dell, Lenovo, Asus, Acer, Apple, Toshiba — we service them all.</p></div></li>
+          <li><span class="check">✓</span><div><strong>5-Star Rated</strong><p>Loved by 21+ customers on Google. Our reputation speaks for itself.</p></div></li>
+        </ul>
       </div>
-      <div class="jobs-list" id="jobsList"><div class="jobs-empty">Loading…</div></div>
-    </div>
-  </section>
-
-  <!-- WHY -->
-  <section class="why" id="why">
-    <div class="container">
-      <div class="why-inner">
-        <div class="why-text">
-          <div class="section-label">Why Choose Us</div>
-          <h2 class="section-title">Negombo's Trusted<br/>Tech Experts</h2>
-          <ul class="why-list">
-            <li><span class="check">✓</span><div><strong>Same-Day Repairs</strong><p>Most issues diagnosed and fixed on the same visit so you're not left waiting.</p></div></li>
-            <li><span class="check">✓</span><div><strong>Honest, Upfront Pricing</strong><p>No hidden charges. We tell you the cost before we start any work.</p></div></li>
-            <li><span class="check">✓</span><div><strong>All Brands Welcome</strong><p>HP, Dell, Lenovo, Asus, Acer, Apple, Toshiba — we service them all.</p></div></li>
-            <li><span class="check">✓</span><div><strong>5-Star Rated</strong><p>Loved by 21+ customers on Google. Our reputation speaks for itself.</p></div></li>
-          </ul>
+      <div class="why-card">
+        <div class="contact-quick">
+          <h3>Get In Touch</h3>
+          <a href="tel:+94713921131" class="contact-row"><span class="contact-ico">📞</span><span>+94 71 392 1131</span></a>
+          <a href="mailto:tecnegrepair@gmail.com" class="contact-row"><span class="contact-ico">✉️</span><span>tecnegrepair@gmail.com</span></a>
+          <div class="contact-row"><span class="contact-ico">📍</span><span>178, Meerigama Road,<br/>Negombo 11500, Sri Lanka</span></div>
+          <a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener" class="contact-row"><span class="contact-ico">📸</span><span>@negombo_tech</span></a>
+          <a href="tel:+94713921131" class="btn btn-primary" style="width:100%;margin-top:1.2rem;text-align:center;">Call Now →</a>
         </div>
-        <div class="why-card">
-          <div class="contact-quick">
-            <h3>Get In Touch</h3>
-            <a href="tel:+94713921131" class="contact-row"><span class="contact-ico">📞</span><span>+94 71 392 1131</span></a>
-            <a href="mailto:tecnegrepair@gmail.com" class="contact-row"><span class="contact-ico">✉️</span><span>tecnegrepair@gmail.com</span></a>
-            <div class="contact-row"><span class="contact-ico">📍</span><span>178, Meerigama Road, Negombo 11500</span></div>
-            <a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener" class="contact-row"><span class="contact-ico">📸</span><span>@negombo_tech</span></a>
-            <div class="contact-row" style="flex-direction:column;align-items:flex-start;gap:.4rem;">
-              <div style="display:flex;align-items:center;gap:.5rem;"><span class="contact-ico">🕐</span><span style="font-weight:600">Opening Hours</span></div>
-              <div id="hoursStatus" class="hours-status"><span class="hours-dot closed-dot"></span>Loading…</div>
-              <table class="hours-table" id="hoursTable"></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-label">Customer Reviews</div>
+    <h2 class="section-title">What People Say</h2>
+    <div class="stars-big">★★★★★ <span>5.0 / 5 on Google</span></div>
+    <div class="reviews-grid">
+      <div class="review-card"><div class="review-stars">★★★★★</div><p>"Fixed my laptop screen within a few hours. Very professional service and fair price. Highly recommended!"</p><div class="reviewer">— Local Customer</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p>"My PC had a serious virus issue. They cleaned it completely and it's running like new. Fast and friendly!"</p><div class="reviewer">— Negombo Resident</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p>"Great service at a very reasonable price. Recovered all my important files from a damaged hard drive. Lifesavers!"</p><div class="reviewer">— Small Business Owner</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title">Visit Our Shop</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-block"><h4>Address</h4><p>178, Meerigama Road<br/>Negombo 11500, Sri Lanka</p></div>
+        <div class="info-block"><h4>Phone</h4><p><a href="tel:+94713921131">+94 71 392 1131</a></p></div>
+        <div class="info-block"><h4>Email</h4><p><a href="mailto:tecnegrepair@gmail.com">tecnegrepair@gmail.com</a></p></div>
+        <div class="info-block" id="hoursInfoBlock"><h4>Hours</h4><p>Mon – Sat: 9:00 AM – 6:00 PM<br/>Sunday: Closed</p></div>
+        <div class="info-block"><h4>Social</h4><p><a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener">Instagram: @negombo_tech</a></p></div>
+      </div>
+      <div class="map-wrap">
+        <iframe title="Negombo Tech Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4!2d79.8453!3d7.2080!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMjguOCJOIDc5wrA1MCc0My4xIkU!5e0!3m2!1sen!2slk!4v1620000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><span class="logo-mark small">NT</span><span>Negombo<strong>Tech</strong></span></div>
+      <p>Fast, reliable computer repair in Negombo, Sri Lanka.</p>
+      <p class="footer-copy">© 2025 Negombo Tech Computer Repair · All rights reserved</p>
+      <span class="footer-admin-link" onclick="openAdmin()">Admin</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ ADMIN PANEL ══════════════════ -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+
+    <!-- LOGIN -->
+    <div id="adminLogin">
+      <div class="admin-title">🔐 Admin Panel</div>
+      <div class="admin-sub">Negombo Tech — Staff Only</div>
+      <div class="login-form">
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label>Password</label>
+          <input type="password" id="adminPwInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()" />
+        </div>
+        <button class="btn btn-primary" style="width:100%;" onclick="doLogin()">Login →</button>
+        <div class="admin-msg" id="loginMsg"></div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="adminDash" style="display:none;">
+      <div class="admin-title">⚙️ Admin Dashboard</div>
+      <div class="admin-sub">All changes go live instantly for all visitors · <a href="#" onclick="doLogout();return false;" style="color:var(--accent);">Logout</a></div>
+
+      <!-- HOURS -->
+      <div class="admin-section">
+        <div class="admin-section-title">Opening Hours</div>
+        <div class="admin-form-row">
+          <div class="form-group"><label>Monday</label><input type="text" id="h_mon" placeholder="9:00 AM – 6:00 PM" /></div>
+          <div class="form-group"><label>Tuesday</label><input type="text" id="h_tue" placeholder="9:00 AM – 6:00 PM" /></div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group"><label>Wednesday</label><input type="text" id="h_wed" placeholder="9:00 AM – 6:00 PM" /></div>
+          <div class="form-group"><label>Thursday</label><input type="text" id="h_thu" placeholder="9:00 AM – 6:00 PM" /></div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group"><label>Friday</label><input type="text" id="h_fri" placeholder="9:00 AM – 6:00 PM" /></div>
+          <div class="form-group"><label>Saturday</label><input type="text" id="h_sat" placeholder="9:00 AM – 6:00 PM" /></div>
+        </div>
+        <div class="admin-form-row">
+          <div class="form-group"><label>Sunday</label><input type="text" id="h_sun" placeholder="Closed" /></div>
+          <div class="form-group"><label>Special Notice (optional)</label><input type="text" id="h_notice" placeholder="e.g. Closed Poya Day – Apr 15" /></div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveHours()">Save Hours</button>
+        <div class="admin-msg" id="hoursMsg"></div>
+      </div>
+
+      <!-- JOBS -->
+      <div class="admin-section">
+        <div class="admin-section-title">Repair Jobs</div>
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.8rem;">Add / Update Job</div>
+          <div class="admin-form-row">
+            <div class="form-group"><label>Job ID</label><input type="text" id="j_id" placeholder="NT-2025-001" /></div>
+            <div class="form-group"><label>Customer Name</label><input type="text" id="j_customer" placeholder="John Silva" /></div>
+          </div>
+          <div class="admin-form-row">
+            <div class="form-group"><label>Device</label><input type="text" id="j_device" placeholder="Dell Inspiron 15" /></div>
+            <div class="form-group"><label>Issue</label><input type="text" id="j_issue" placeholder="Screen broken, won't boot…" /></div>
+          </div>
+          <div class="admin-form-row">
+            <div class="form-group"><label>Current Stage</label>
+              <select id="j_stage">
+                <option value="received">Received</option>
+                <option value="diagnosing">Diagnosing</option>
+                <option value="repairing">Repairing</option>
+                <option value="testing">Testing</option>
+                <option value="ready">Ready for Collection</option>
+                <option value="collected">Collected</option>
+              </select>
             </div>
-            <a href="tel:+94713921131" class="btn btn-primary" style="width:100%;margin-top:1.2rem;text-align:center;">Call Now →</a>
+            <div class="form-group"><label>Notes (optional)</label><input type="text" id="j_notes" placeholder="Waiting for part…" /></div>
           </div>
+          <button class="btn btn-primary btn-sm" id="addJobBtn" onclick="addJob()">Add / Update Job</button>
+          <div class="admin-msg" id="jobMsg"></div>
         </div>
+        <div style="font-size:0.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Active Jobs</div>
+        <div class="admin-list" id="adminJobsList"></div>
       </div>
-    </div>
-  </section>
 
-  <!-- REVIEWS -->
-  <section class="reviews" id="reviews">
-    <div class="container">
-      <div class="section-label">Customer Reviews</div>
-      <h2 class="section-title">What People Say</h2>
-      <div class="stars-big">★★★★★ <span>5.0 / 5 on Google</span></div>
-      <div class="reviews-grid">
-        <div class="review-card"><div class="review-stars">★★★★★</div><p>"Fixed my laptop screen within a few hours. Very professional service and fair price. Highly recommended!"</p><div class="reviewer">— Local Customer</div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p>"My PC had a serious virus issue. They cleaned it completely and it's running like new. Fast and friendly!"</p><div class="reviewer">— Negombo Resident</div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><p>"Great service at a very reasonable price. Recovered all my important files from a damaged hard drive. Lifesavers!"</p><div class="reviewer">— Small Business Owner</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-label">Find Us</div>
-      <h2 class="section-title">Visit Our Shop</h2>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="info-block"><h4>Address</h4><p>178, Meerigama Road<br/>Negombo 11500, Sri Lanka</p></div>
-          <div class="info-block"><h4>Phone</h4><p><a href="tel:+94713921131">+94 71 392 1131</a></p></div>
-          <div class="info-block"><h4>Email</h4><p><a href="mailto:tecnegrepair@gmail.com">tecnegrepair@gmail.com</a></p></div>
-          <div class="info-block"><h4>Social</h4><p><a href="https://instagram.com/negombo_tech" target="_blank" rel="noopener">@negombo_tech</a></p></div>
-        </div>
-        <div class="map-wrap">
-          <iframe title="Negombo Tech Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.4!2d79.8453!3d7.2080!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTInMjguOCJOIDc5wrA1MCc0My4xIkU!5e0!3m2!1sen!2slk!4v1620000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0" allowfullscreen loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand"><span class="logo-mark small">NT</span><span>Negombo<strong>Tech</strong></span></div>
-        <p>Fast, reliable computer repair in Negombo, Sri Lanka.</p>
-        <p style="margin-top:.6rem"><a href="admin.html" style="color:var(--muted);font-size:.78rem;opacity:.45">⚙ Admin Panel</a></p>
-        <p class="footer-copy">© 2025 Negombo Tech Computer Repair · All rights reserved</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
-  <script src="store.js"></script>
-  <script>
-    const STAGES = ['Received','Diagnosing','Repairing','Testing','Ready','Delivered'];
-
-    // HOURS
-    const DAY_KEYS = ['mon','tue','wed','thu','fri','sat','sun'];
-    const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-
-    function renderHours() {
-      const store = NTStore.get();
-      const now = new Date();
-      const todayIdx = (now.getDay() + 6) % 7;
-      const todayKey = DAY_KEYS[todayIdx];
-      const h = store.hours[todayKey];
-      let isOpen = false;
-      if (!h.closed && h.open && h.close) {
-        const [oh,om] = h.open.split(':').map(Number);
-        const [ch,cm] = h.close.split(':').map(Number);
-        const n = now.getHours()*60+now.getMinutes();
-        isOpen = n >= oh*60+om && n < ch*60+cm;
-      }
-      document.getElementById('hoursStatus').innerHTML =
-        `<span class="hours-dot ${isOpen?'open-dot':'closed-dot'}"></span>
-         ${isOpen ? `Open now · Closes ${h.close}` : (h.closed ? 'Closed today' : `Closed · Opens ${h.open}`)}`;
-      document.getElementById('hoursTable').innerHTML = DAY_KEYS.map((k,i) => {
-        const hh = store.hours[k];
-        return `<tr class="${i===todayIdx?'today':''}"><td>${DAY_NAMES[i]}</td><td>${hh.closed?'Closed':`${hh.open} – ${hh.close}`}</td></tr>`;
-      }).join('');
-    }
-
-    // SHOP
-    const STOCK_LABEL = {instock:'In Stock',limited:'Limited',out:'Out of Stock'};
-    const STOCK_CLASS  = {instock:'badge-instock',limited:'badge-limited',out:'badge-out'};
-
-    function renderShop() {
-      const store = NTStore.get();
-      const grid = document.getElementById('shopGrid');
-      if (!store.products.length) {
-        grid.innerHTML = '<div class="shop-empty">No products listed yet. Check back soon!</div>'; return;
-      }
-      grid.innerHTML = store.products.map(p => `
-        <div class="shop-card">
-          <div class="shop-img">${p.emoji||'📦'}</div>
-          <div class="shop-body">
-            <div class="shop-category">${p.category}</div>
-            <div class="shop-name">${p.name}</div>
-            <div class="shop-desc">${p.desc}</div>
-            <div class="shop-price">${p.price}
-              <span class="shop-badge ${STOCK_CLASS[p.stock]}">${STOCK_LABEL[p.stock]}</span>
+      <!-- FOR SALE -->
+      <div class="admin-section">
+        <div class="admin-section-title">For Sale Items</div>
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.8rem;">Add New Item</div>
+          <div class="admin-form-row">
+            <div class="form-group"><label>Item Name</label><input type="text" id="i_name" placeholder="Lenovo ThinkPad T480" /></div>
+            <div class="form-group"><label>Price (LKR)</label><input type="number" id="i_price" placeholder="45000" /></div>
+          </div>
+          <div class="admin-form-row">
+            <div class="form-group"><label>Condition</label>
+              <select id="i_condition">
+                <option value="new">New</option>
+                <option value="refurbished">Refurbished</option>
+                <option value="used">Used</option>
+              </select>
             </div>
+            <div class="form-group"><label>Image URL (optional)</label><input type="text" id="i_image" placeholder="https://…" /></div>
           </div>
-        </div>`).join('');
-    }
-
-    // JOBS
-    function renderJobs(filter='') {
-      const store = NTStore.get();
-      let jobs = store.jobs || [];
-      if (filter) {
-        const q = filter.toLowerCase();
-        jobs = jobs.filter(j =>
-          j.id.toLowerCase().includes(q)||j.name.toLowerCase().includes(q)||j.device.toLowerCase().includes(q));
-      } else {
-        jobs = jobs.filter(j => j.stage < 6);
-      }
-      const list = document.getElementById('jobsList');
-      if (!jobs.length) {
-        list.innerHTML = `<div class="jobs-empty">${filter?'No results for "'+filter+'"':'No active repairs right now.'}</div>`; return;
-      }
-      list.innerHTML = jobs.map(job => {
-        const si = Math.min(job.stage, STAGES.length-1);
-        const stagesHtml = STAGES.map((s,i) => {
-          const cls = i < si ? 'done' : i === si ? 'current' : '';
-          return `<div class="stage-step ${cls}">
-            <div class="stage-dot">${i<si?'✓':i===si?'●':''}</div>
-            <div class="stage-label">${s}</div>
-          </div>`;
-        }).join('');
-        return `<div class="job-card">
-          <div>
-            <div class="job-id">${job.id}</div>
-            <div class="job-name">${job.name}</div>
-            <div class="job-device">${job.device}</div>
-            ${job.note?`<div class="job-note">📝 ${job.note}</div>`:''}
+          <div class="admin-form-row single">
+            <div class="form-group"><label>Description</label><textarea id="i_desc" placeholder="i7, 8GB RAM, 256GB SSD, good condition…"></textarea></div>
           </div>
-          <span class="job-pill pill-${si}">${STAGES[si]}</span>
-          <div class="job-stages">${stagesHtml}</div>
-        </div>`;
-      }).join('');
-    }
+          <button class="btn btn-primary btn-sm" id="addItemBtn" onclick="addItem()">Add Item</button>
+          <div class="admin-msg" id="itemMsg"></div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Listed Items</div>
+        <div class="admin-list" id="adminItemsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    document.getElementById('jobSearch').addEventListener('input', e => renderJobs(e.target.value));
-    renderHours(); renderShop(); renderJobs();
-    setInterval(() => { renderHours(); renderShop(); renderJobs(document.getElementById('jobSearch').value); }, 20000);
-  </script>
+<script>
+// ╔══════════════════════════════════════════════════════╗
+// ║   STEP 1 — PASTE YOUR SUPABASE CREDENTIALS BELOW    ║
+// ║   (See SETUP.md for how to get these)               ║
+// ╚══════════════════════════════════════════════════════╝
+const SUPABASE_URL      = 'https://phtnsrbsobhqhdnixcbw.supabase.co';       // e.g. https://xyzxyzxyz.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBodG5zcmJzb2JocWhkbml4Y2J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4MDg1MzcsImV4cCI6MjA5NDM4NDUzN30.TKRnKQyMVElfY7w7yUjeeXWYuWOsE5rIYCRo15fqg2w';  // long eyJ… string from Supabase dashboard
+
+// ╔══════════════════════════════════════════════════════╗
+// ║   STEP 2 — CHANGE THE ADMIN PASSWORD               ║
+// ╚══════════════════════════════════════════════════════╝
+const ADMIN_PASSWORD = 'ntech2001';
+
+// ──────────────────────────────────────────────────────
+const CONFIGURED = SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+
+const STAGES = [
+  { key:'received',   label:'Device Received',     note:'We have your device safely.' },
+  { key:'diagnosing', label:'Diagnosing',           note:'Identifying the problem.' },
+  { key:'repairing',  label:'Repair in Progress',  note:'Our technician is working on it.' },
+  { key:'testing',    label:'Testing',              note:'Checking everything works correctly.' },
+  { key:'ready',      label:'Ready for Collection', note:'Come pick it up anytime!' },
+  { key:'collected',  label:'Collected',            note:'Job complete.' }
+];
+
+const SB_CLASS = { received:'sb-received', diagnosing:'sb-diagnosing', repairing:'sb-repairing', testing:'sb-testing', ready:'sb-ready', collected:'sb-collected' };
+
+// ── Supabase REST helper ───────────────────────────────
+async function sb(method, table, body, filters) {
+  let url = `${SUPABASE_URL}/rest/v1/${table}`;
+  const params = [];
+  if (filters) Object.entries(filters).forEach(([k,v]) => params.push(`${k}=eq.${encodeURIComponent(v)}`));
+  if (method === 'GET') params.push('order=created_at.desc');
+  if (params.length) url += '?' + params.join('&');
+  const headers = {
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+  const res = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
+  if (!res.ok) throw new Error((await res.text()).slice(0, 200));
+  return method === 'DELETE' ? null : res.json();
+}
+
+async function sbUpsert(table, body, conflict) {
+  const url = `${SUPABASE_URL}/rest/v1/${table}?on_conflict=${conflict}`;
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=representation' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error((await res.text()).slice(0, 200));
+  return res.json();
+}
+
+// ══════════════════════════════════════════════════════
+//  HOURS
+// ══════════════════════════════════════════════════════
+const DEFAULT_HOURS = { mon:'9:00 AM – 6:00 PM', tue:'9:00 AM – 6:00 PM', wed:'9:00 AM – 6:00 PM', thu:'9:00 AM – 6:00 PM', fri:'9:00 AM – 6:00 PM', sat:'9:00 AM – 6:00 PM', sun:'Closed', notice:'' };
+const DAY_KEYS  = ['mon','tue','wed','thu','fri','sat','sun'];
+const DAY_NAMES = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+async function loadAndRenderHours() {
+  let h = DEFAULT_HOURS;
+  if (CONFIGURED) { try { const r = await sb('GET','hours'); if (r.length) h = r[0]; } catch {} }
+  paintHours(h);
+  return h;
+}
+
+function paintHours(h) {
+  const todayKey  = ['sun','mon','tue','wed','thu','fri','sat'][new Date().getDay()];
+  const todayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
+  const t = h[todayKey] || 'Closed';
+  let html = `<strong>Today (${todayName}):</strong> `;
+  html += t.toLowerCase()==='closed' ? `<span class="closed-notice">Closed</span>` : t;
+  if (h.notice) html += ` &nbsp;·&nbsp; <span class="closed-notice">⚠️ ${h.notice}</span>`;
+  document.getElementById('hoursText').innerHTML = html;
+
+  let bHtml = '<h4>Hours</h4>';
+  DAY_KEYS.forEach((k,i) => {
+    const v = h[k]||'Closed', closed = v.toLowerCase()==='closed';
+    bHtml += `<p style="margin-bottom:3px;font-size:0.88rem;"><span style="color:var(--text);font-weight:600;">${DAY_NAMES[i]}:</span> <span style="color:${closed?'#ff9966':'var(--muted)'};">${v}</span></p>`;
+  });
+  if (h.notice) bHtml += `<p style="margin-top:0.5rem;color:#ff9966;font-size:0.8rem;">⚠️ ${h.notice}</p>`;
+  document.getElementById('hoursInfoBlock').innerHTML = bHtml;
+}
+
+async function saveHours() {
+  const h = {};
+  [...DAY_KEYS,'notice'].forEach(k => { h[k] = document.getElementById('h_'+k).value.trim(); });
+  if (!CONFIGURED) { showMsg('hoursMsg','⚠️ Supabase not set up yet — see SETUP.md','error'); return; }
+  try {
+    const existing = await sb('GET','hours');
+    if (existing.length) await sb('PATCH','hours',h,{id:existing[0].id});
+    else await sb('POST','hours',h);
+    paintHours(h);
+    showMsg('hoursMsg','✓ Hours updated — live for all visitors now!','success');
+  } catch(e) { showMsg('hoursMsg','✗ '+e.message,'error'); }
+}
+
+// ══════════════════════════════════════════════════════
+//  JOB TRACKER
+// ══════════════════════════════════════════════════════
+async function lookupJob() {
+  const id = document.getElementById('jobInput').value.trim().toUpperCase();
+  const resultEl = document.getElementById('jobResult');
+  const notFoundEl = document.getElementById('jobNotFound');
+  const btn = document.getElementById('trackBtn');
+  resultEl.classList.remove('visible');
+  notFoundEl.classList.remove('visible');
+  if (!id) return;
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  try {
+    if (!CONFIGURED) { notFoundEl.textContent = '⚠️ Backend not configured yet.'; notFoundEl.classList.add('visible'); }
+    else {
+      const rows = await sb('GET','jobs',null,{job_id:id});
+      if (!rows.length) notFoundEl.classList.add('visible');
+      else { resultEl.innerHTML = buildJobCard(rows[0]); resultEl.classList.add('visible'); }
+    }
+  } catch { notFoundEl.textContent = '⚠️ Connection error. Please try again.'; notFoundEl.classList.add('visible'); }
+  btn.textContent = 'Track →'; btn.disabled = false;
+}
+
+function buildJobCard(job) {
+  const idx = STAGES.findIndex(s => s.key === job.stage);
+  let track = '<div class="stage-track">';
+  STAGES.forEach((s,i) => {
+    const done=i<idx, active=i===idx, last=i===STAGES.length-1;
+    track += `<div class="stage-item">
+      <div class="stage-dot-col">
+        <div class="stage-dot ${done?'done':active?'active':''}">${done?'✓':active?'●':''}</div>
+        ${!last?`<div class="stage-line ${done?'done':''}"></div>`:''}
+      </div>
+      <div class="stage-content">
+        <div class="stage-name ${done?'done':active?'active':''}">${s.label}</div>
+        ${active?`<div class="stage-note">${job.notes||s.note}</div>`:''}
+      </div>
+    </div>`;
+  });
+  track += '</div>';
+  const sbCls = SB_CLASS[job.stage]||'sb-received';
+  const label = STAGES.find(s=>s.key===job.stage)?.label||job.stage;
+  return `<div class="job-result-header">
+    <div>
+      <div class="job-id-label">Job ID: ${job.job_id}</div>
+      <div class="job-device">${job.device}</div>
+      <div class="job-customer">${job.customer}${job.issue?' · '+job.issue:''}</div>
+    </div>
+    <span class="stage-badge ${sbCls}">${label}</span>
+  </div>${track}`;
+}
+
+// ══════════════════════════════════════════════════════
+//  ADMIN — JOBS
+// ══════════════════════════════════════════════════════
+async function addJob() {
+  const job_id   = document.getElementById('j_id').value.trim().toUpperCase();
+  const customer = document.getElementById('j_customer').value.trim();
+  const device   = document.getElementById('j_device').value.trim();
+  const issue    = document.getElementById('j_issue').value.trim();
+  const stage    = document.getElementById('j_stage').value;
+  const notes    = document.getElementById('j_notes').value.trim();
+  if (!job_id||!customer||!device) { showMsg('jobMsg','Please fill in Job ID, Customer and Device.','error'); return; }
+  if (!CONFIGURED) { showMsg('jobMsg','⚠️ Supabase not configured yet — see SETUP.md','error'); return; }
+  const btn = document.getElementById('addJobBtn');
+  btn.innerHTML='<span class="spinner"></span> Saving…'; btn.disabled=true;
+  try {
+    await sbUpsert('jobs',{job_id,customer,device,issue,stage,notes},'job_id');
+    showMsg('jobMsg','✓ Job saved — customers can track it live now!','success');
+    ['j_id','j_customer','j_device','j_issue','j_notes'].forEach(f=>document.getElementById(f).value='');
+    document.getElementById('j_stage').value='received';
+    renderAdminJobs();
+  } catch(e) { showMsg('jobMsg','✗ '+e.message,'error'); }
+  btn.textContent='Add / Update Job'; btn.disabled=false;
+}
+
+async function quickStage(job_id, stage) {
+  try { await sb('PATCH','jobs',{stage},{job_id}); renderAdminJobs(); }
+  catch(e) { alert('Error: '+e.message); }
+}
+
+async function deleteJob(job_id) {
+  if (!confirm('Delete job '+job_id+'?')) return;
+  try { await sb('DELETE','jobs',null,{job_id}); renderAdminJobs(); }
+  catch(e) { alert('Error: '+e.message); }
+}
+
+async function renderAdminJobs() {
+  const el = document.getElementById('adminJobsList');
+  el.innerHTML = '<div style="color:var(--muted);font-size:0.85rem;padding:0.5rem;">Loading…</div>';
+  if (!CONFIGURED) { el.innerHTML='<div style="color:#ff9966;font-size:0.85rem;">Supabase not configured — see SETUP.md</div>'; return; }
+  try {
+    const jobs = await sb('GET','jobs');
+    if (!jobs.length) { el.innerHTML='<div style="color:var(--muted);font-size:0.85rem;">No jobs yet.</div>'; return; }
+    el.innerHTML = jobs.map(j => {
+      const opts = STAGES.map(s=>`<option value="${s.key}"${s.key===j.stage?' selected':''}>${s.label}</option>`).join('');
+      const label = STAGES.find(s=>s.key===j.stage)?.label||j.stage;
+      return `<div class="admin-job-item">
+        <div class="admin-job-header">
+          <div><div class="admin-job-id">${j.job_id}</div><div class="admin-job-device">${j.device} · ${j.customer}</div></div>
+          <span class="stage-badge ${SB_CLASS[j.stage]||'sb-received'}">${label}</span>
+        </div>
+        ${j.issue?`<div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px;">${j.issue}</div>`:''}
+        <div class="admin-job-actions">
+          <select onchange="quickStage('${j.job_id}',this.value)" style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-size:0.8rem;">${opts}</select>
+          <button class="btn btn-danger btn-sm" onclick="deleteJob('${j.job_id}')">Delete</button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML=`<div style="color:#ff9999;font-size:0.85rem;">Error: ${e.message}</div>`; }
+}
+
+// ══════════════════════════════════════════════════════
+//  FOR SALE
+// ══════════════════════════════════════════════════════
+const CCLASS = { new:'condition-new', refurbished:'condition-refurbished', used:'condition-used' };
+const CLABEL = { new:'New', refurbished:'Refurbished', used:'Used' };
+
+async function loadForSale() {
+  const grid = document.getElementById('forsaleGrid');
+  if (!CONFIGURED) { grid.innerHTML='<div class="empty-state"><div>🏷️</div><p>No items listed right now.</p></div>'; return; }
+  try {
+    const items = await sb('GET','sale_items');
+    if (!items.length) { grid.innerHTML='<div class="empty-state"><div>🏷️</div><p>No items listed right now. Check back soon!</p></div>'; return; }
+    grid.innerHTML = items.map(item=>`
+      <div class="item-card">
+        <div class="item-img">${item.image_url?`<img src="${item.image_url}" alt="${item.name}" onerror="this.parentElement.innerHTML='💻'"/>`:'💻'}</div>
+        <div class="item-body">
+          <span class="item-condition ${CCLASS[item.condition]||'condition-used'}">${CLABEL[item.condition]||item.condition}</span>
+          <div class="item-name">${item.name}</div>
+          ${item.description?`<div class="item-desc">${item.description}</div>`:''}
+          <div class="item-price">LKR ${Number(item.price).toLocaleString()}</div>
+          <a href="tel:+94713921131" class="btn btn-ghost btn-sm" style="margin-top:0.7rem;">📞 Enquire</a>
+        </div>
+      </div>`).join('');
+  } catch { grid.innerHTML='<div class="empty-state"><div>🏷️</div><p>Could not load items.</p></div>'; }
+}
+
+async function addItem() {
+  const name      = document.getElementById('i_name').value.trim();
+  const price     = document.getElementById('i_price').value.trim();
+  const condition = document.getElementById('i_condition').value;
+  const description = document.getElementById('i_desc').value.trim();
+  const image_url = document.getElementById('i_image').value.trim();
+  if (!name||!price) { showMsg('itemMsg','Please fill in name and price.','error'); return; }
+  if (!CONFIGURED)   { showMsg('itemMsg','⚠️ Supabase not configured yet — see SETUP.md','error'); return; }
+  const btn = document.getElementById('addItemBtn');
+  btn.innerHTML='<span class="spinner"></span> Saving…'; btn.disabled=true;
+  try {
+    await sb('POST','sale_items',{name,price:parseInt(price),condition,description,image_url});
+    showMsg('itemMsg','✓ Item listed — visible to all visitors now!','success');
+    ['i_name','i_price','i_desc','i_image'].forEach(f=>document.getElementById(f).value='');
+    loadForSale(); renderAdminItems();
+  } catch(e) { showMsg('itemMsg','✗ '+e.message,'error'); }
+  btn.textContent='Add Item'; btn.disabled=false;
+}
+
+async function deleteItem(id) {
+  if (!confirm('Remove this item from the listing?')) return;
+  try { await sb('DELETE','sale_items',null,{id}); loadForSale(); renderAdminItems(); }
+  catch(e) { alert('Error: '+e.message); }
+}
+
+async function renderAdminItems() {
+  const el = document.getElementById('adminItemsList');
+  el.innerHTML='<div style="color:var(--muted);font-size:0.85rem;">Loading…</div>';
+  if (!CONFIGURED) { el.innerHTML='<div style="color:#ff9966;font-size:0.85rem;">Supabase not configured — see SETUP.md</div>'; return; }
+  try {
+    const items = await sb('GET','sale_items');
+    if (!items.length) { el.innerHTML='<div style="color:var(--muted);font-size:0.85rem;">No items listed.</div>'; return; }
+    el.innerHTML = items.map(item=>`
+      <div class="admin-item-row">
+        <div class="admin-item-info">
+          <div class="name">${item.name}</div>
+          <div class="price">LKR ${Number(item.price).toLocaleString()} · ${item.condition}</div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteItem(${item.id})">Remove</button>
+      </div>`).join('');
+  } catch(e) { el.innerHTML=`<div style="color:#ff9999;font-size:0.85rem;">Error: ${e.message}</div>`; }
+}
+
+// ══════════════════════════════════════════════════════
+//  ADMIN AUTH
+// ══════════════════════════════════════════════════════
+function openAdmin()  { document.getElementById('adminOverlay').classList.add('open'); setTimeout(()=>document.getElementById('adminPwInput').focus(),100); }
+function closeAdmin() { document.getElementById('adminOverlay').classList.remove('open'); }
+
+async function doLogin() {
+  if (document.getElementById('adminPwInput').value !== ADMIN_PASSWORD) { showMsg('loginMsg','Incorrect password.','error'); return; }
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminDash').style.display  = 'block';
+  const h = await loadAndRenderHours();
+  if (h) { [...DAY_KEYS,'notice'].forEach(k => { const el=document.getElementById('h_'+k); if(el) el.value=h[k]||''; }); }
+  renderAdminJobs();
+  renderAdminItems();
+}
+
+function doLogout() {
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminDash').style.display  = 'none';
+  document.getElementById('adminPwInput').value = '';
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text; el.className = 'admin-msg '+type;
+  setTimeout(()=>{ el.className='admin-msg'; }, 5000);
+}
+
+// ══════════════════════════════════════════════════════
+//  NAV & SCROLL REVEAL
+// ══════════════════════════════════════════════════════
+window.addEventListener('scroll', ()=>document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40));
+document.getElementById('hamburger').addEventListener('click', ()=>document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+document.getElementById('jobInput').addEventListener('keydown', e=>{ if(e.key==='Enter') lookupJob(); });
+document.getElementById('adminOverlay').addEventListener('click', e=>{ if(e.target.id==='adminOverlay') closeAdmin(); });
+
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((entry,i)=>{ if(entry.isIntersecting){ entry.target.style.transitionDelay=`${i*0.06}s`; entry.target.classList.add('rv'); obs.unobserve(entry.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.service-card,.review-card,.why-list li,.info-block').forEach(el=>{
+  el.style.cssText+='opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;';
+  obs.observe(el);
+});
+const s=document.createElement('style'); s.textContent='.rv{opacity:1!important;transform:none!important;}'; document.head.appendChild(s);
+
+// ══════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════
+loadAndRenderHours();
+loadForSale();
+</script>
 </body>
 </html>
